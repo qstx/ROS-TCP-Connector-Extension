@@ -1,0 +1,15 @@
+{
+  "name": "com.qstx.ros_tcp_ext",
+  "version": "1.0.0",
+  "displayName": "ROS TCP Connector Extension",
+  "description": "\u5bf9Unity\u5b98\u65b9\u7684ROS TCP Connector\u5305\u8fdb\u884c\u62d3\u5c55\uff0c\u5c01\u88c5\u4e3a\u7ec4\u4ef6",
+  "unity": "2021.3",
+  "dependencies": {
+    "com.unity.robotics.ros-tcp-connector": "0.7.0-preview"
+  },
+  "author": {
+    "name": "qstx",
+    "email": "2031074519@qq.com"
+  },
+  "hideInEditor": false
+}
