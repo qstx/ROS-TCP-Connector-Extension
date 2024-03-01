@@ -1,5 +1,5 @@
 {
-    "name": "QSTX.ROS",
+    "name": "QSTX.ROSTCPConnector.Extension",
     "rootNamespace": "",
     "references": [
         "GUID:625bfc588fb96c74696858f2c467e978",
