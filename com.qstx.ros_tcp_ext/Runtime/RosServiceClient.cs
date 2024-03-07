@@ -43,5 +43,6 @@ namespace QSTX.ROSTCPConnector.Extension
             SrvCallback?.Invoke(response);
             SrvEvent?.Invoke(response);
         }
+        virtual protected void Start(){}
     }
 }

@@ -49,5 +49,6 @@ namespace QSTX.ROSTCPConnector.Extension
             Debug.Log($"UnSubscribe Topic: {Name}");
             IsSubscribed = false;
         }
+        virtual protected void Start(){}
     }
 }

@@ -36,5 +36,6 @@ namespace QSTX.ROSTCPConnector.Extension
         {
             ROSConnection.GetOrCreateInstance().Publish(Name, msg);
         }
+        virtual protected void Start(){}
     }
 }
