@@ -15,7 +15,7 @@ namespace QSTX.ROSTCPConnector.Extension
         public SrvCallbackDelegate SrvCallback { protected set; get; } = null;
         
         [SerializeField] private UnityEvent<TResponse> srvEvent = null;
-        private UnityEvent<TResponse> SrvEvent => srvEvent;
+        public UnityEvent<TResponse> SrvEvent => srvEvent;
 
         public bool IsRegistered { protected set; get; } = false;
 
@@ -43,6 +43,6 @@ namespace QSTX.ROSTCPConnector.Extension
             SrvCallback?.Invoke(response);
             SrvEvent?.Invoke(response);
         }
-        virtual protected void Start(){}
+        protected virtual void Start(){}
     }
 }

@@ -10,13 +10,13 @@ namespace QSTX.ROSTCPConnector.Extension
         [SerializeField] private string topicName;
         public string Name => topicName;
         
-        [SerializeField]
-        private bool registerOnStart = false;
-        protected virtual void Start()
-        {
-            if (registerOnStart)
-                Register();
-        }
+        // [SerializeField]
+        // private bool registerOnStart = false;
+        // protected virtual void Start()
+        // {
+        //     if (registerOnStart)
+        //         Register();
+        // }
         public bool IsRegistered { protected set; get; } = false;
 
         public virtual void Register()
@@ -36,6 +36,6 @@ namespace QSTX.ROSTCPConnector.Extension
         {
             ROSConnection.GetOrCreateInstance().Publish(Name, msg);
         }
-        virtual protected void Start(){}
+        protected virtual void Start(){}
     }
 }
