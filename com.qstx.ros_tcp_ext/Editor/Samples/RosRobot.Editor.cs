@@ -1,8 +1,9 @@
 using System;
 using UnityEngine;
 using UnityEditor;
+using QSTX.ROSTCPConnector.Extension.Samples;
 
-namespace QSTX.ROSTCPConnector.Extension.Editor
+namespace QSTX.ROSTCPConnector.Extension.Samples.Editor
 {
     [CustomEditor(typeof(RosRobot))]
     public class RosRobotEditor : UnityEditor.Editor

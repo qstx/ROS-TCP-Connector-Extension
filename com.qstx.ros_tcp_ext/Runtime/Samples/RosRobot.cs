@@ -5,7 +5,7 @@ using UnityEngine;
 using QSTX.ROSTCPConnector.Extension;
 using RosMessageTypes.Sensor;
 
-namespace QSTX.ROSTCPConnector.Extension
+namespace QSTX.ROSTCPConnector.Extension.Samples
 {
     [AddComponentMenu(("ROS TCP Component/RosRobot"))]
     public class RosRobot : RosTopicSubscriber<JointStateMsg>
@@ -20,6 +20,12 @@ namespace QSTX.ROSTCPConnector.Extension
                 driver.target = isDeg?(float)msg.position[i]:(float)msg.position[i]*Mathf.Rad2Deg;
                 joints[i].xDrive = driver;
             }
+        }
+
+        protected override void Start()
+        {
+            Subscribe();
+            MsgCallback += MoveToTarget;
         }
 #if UNITY_EDITOR
         [Header("Only For 【RUNTIME】 Test")]
