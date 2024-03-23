@@ -36,7 +36,9 @@ namespace QSTX.ROSTCPConnector.Extension
             Debug.Log($"Register Subscriber:{Name}");
         }
 
+#if !NO_WARNING
         [Obsolete("方法不安全")]
+#endif
         public virtual void UnSubscribe()
         {
             if (!IsSubscribed)
