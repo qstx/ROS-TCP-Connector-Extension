@@ -44,32 +44,32 @@ namespace QSTX.ROSTCPConnector.Extension.Samples
                 //         }
                 //         break;
                 //     case ColorMode.SeparateRGB:
-                        if (m_RChannel.Length > 0 && m_GChannel.Length > 0 && m_BChannel.Length > 0)
-                        {
-                            int rChannelOffset = (int)msg.fields[channelToIdx[m_RChannel]].offset;
-                            int gChannelOffset = (int)msg.fields[channelToIdx[m_GChannel]].offset;
-                            int bChannelOffset = (int)msg.fields[channelToIdx[m_BChannel]].offset;
-                            colorGenerator = (int iPointStep) =>
-                            {
-                                var colR = BitConverter.ToSingle(msg.data, iPointStep + rChannelOffset);//Mathf.InverseLerp(m_RRange[0], m_RRange[1], BitConverter.ToSingle(message.data, iPointStep + rChannelOffset));
-                                var colG = BitConverter.ToSingle(msg.data, iPointStep + gChannelOffset);//Mathf.InverseLerp(m_GRange[0], m_GRange[1], BitConverter.ToSingle(message.data, iPointStep + gChannelOffset));
-                                var colB = BitConverter.ToSingle(msg.data, iPointStep + bChannelOffset);//Mathf.InverseLerp(m_BRange[0], m_BRange[1], BitConverter.ToSingle(message.data, iPointStep + bChannelOffset));
-                                return new Color(colR, colG, colB, 1);
-                            };
-                        }
+                        // if (m_RChannel.Length > 0 && m_GChannel.Length > 0 && m_BChannel.Length > 0)
+                        // {
+                        //     int rChannelOffset = (int)msg.fields[channelToIdx[m_RChannel]].offset;
+                        //     int gChannelOffset = (int)msg.fields[channelToIdx[m_GChannel]].offset;
+                        //     int bChannelOffset = (int)msg.fields[channelToIdx[m_BChannel]].offset;
+                        //     colorGenerator = (int iPointStep) =>
+                        //     {
+                        //         var colR = BitConverter.ToSingle(msg.data, iPointStep + rChannelOffset);//Mathf.InverseLerp(m_RRange[0], m_RRange[1], BitConverter.ToSingle(message.data, iPointStep + rChannelOffset));
+                        //         var colG = BitConverter.ToSingle(msg.data, iPointStep + gChannelOffset);//Mathf.InverseLerp(m_GRange[0], m_GRange[1], BitConverter.ToSingle(message.data, iPointStep + gChannelOffset));
+                        //         var colB = BitConverter.ToSingle(msg.data, iPointStep + bChannelOffset);//Mathf.InverseLerp(m_BRange[0], m_BRange[1], BitConverter.ToSingle(message.data, iPointStep + bChannelOffset));
+                        //         return new Color(colR, colG, colB, 1);
+                        //     };
+                        // }
                 //         break;
                 //     case ColorMode.CombinedRGB:
-                //         if (m_RgbChannel.Length > 0)
-                //         {
-                //             int rgbChannelOffset = (int)message.fields[channelToIdx[m_RgbChannel]].offset;
-                //             colorGenerator = (int iPointStep) => new Color32
-                //             (
-                //                 message.data[iPointStep + rgbChannelOffset + 2],
-                //                 message.data[iPointStep + rgbChannelOffset + 1],
-                //                 message.data[iPointStep + rgbChannelOffset],
-                //                 255
-                //             );
-                //         }
+                if (m_RgbChannel.Length > 0)
+                {
+                    int rgbChannelOffset = (int)msg.fields[channelToIdx[m_RgbChannel]].offset;
+                    colorGenerator = (int iPointStep) => new Color32
+                    (
+                        msg.data[iPointStep + rgbChannelOffset + 2],
+                        msg.data[iPointStep + rgbChannelOffset + 1],
+                        msg.data[iPointStep + rgbChannelOffset],
+                        255
+                    );
+                }
                 //         break;
                 // }
             }
@@ -92,6 +92,10 @@ namespace QSTX.ROSTCPConnector.Extension.Samples
             mesh.indexFormat = cnt < 65536 ? UnityEngine.Rendering.IndexFormat.UInt16 : UnityEngine.Rendering.IndexFormat.UInt32;
             mesh.vertices = vertices;
             mesh.colors = colors;
+            mesh.SetIndices(
+                Enumerable.Range(0, (int)cnt).ToArray(),
+                MeshTopology.Points, 0
+            );
         }
 
         protected override void Start()
@@ -103,7 +107,7 @@ namespace QSTX.ROSTCPConnector.Extension.Samples
             MsgCallback += ShowPCD;
         }
         [SerializeField]
-        private string m_RChannel = "r", m_GChannel = "g", m_BChannel = "b";
+        private string m_RChannel = "r", m_GChannel = "g", m_BChannel = "b", m_RgbChannel = "rgb";
         [SerializeField]
         private string m_XChannel = "x", m_YChannel = "y", m_ZChannel = "z";
 
@@ -114,6 +118,16 @@ namespace QSTX.ROSTCPConnector.Extension.Samples
 #if UNITY_EDITOR
         [SerializeField]
         private PointCloud2Msg msg;
+
+        [SerializeField] private bool sendOnce = false;
+        private void Update()
+        {
+            if (sendOnce)
+            {
+                ShowPCD(msg);
+                sendOnce = false;
+            }
+        }
 #endif
     }
 }

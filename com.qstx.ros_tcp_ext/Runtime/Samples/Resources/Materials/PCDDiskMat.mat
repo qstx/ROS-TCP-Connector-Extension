@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PCDMat
+  m_Name: PCDDiskMat
   m_Shader: {fileID: 4800000, guid: 065ec7437171cb044aa1552f07f8de8e, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
